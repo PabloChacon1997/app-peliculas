@@ -1,5 +1,22 @@
-.contenedor-pelicula {
-  border: 1px solid black;
-  margin-bottom: 1rem;
-  padding: 1rem;
+.peliculas-contenedor {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+}
+
+.pelicula-contenedor {
+  margin-right: 2%;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+p {
+  max-width: 225;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+button {
+  margin-left: 4rem;
 }
