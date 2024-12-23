@@ -1,1 +1,14 @@
-<button mat-flat-button type="button" (click)="guardarCambios()">Guardar Cambios</button>
+<h2>Crear Género</h2>
+<form (submit)="guardarCambios()" [formGroup]="form">
+  <mat-form-field appearance="outline">
+    <mat-label>Nombre</mat-label>
+    <input matInput [formControl]="form.controls.nombre" />
+    <mat-error>{{obtenerErrorCampoNombre()}}</mat-error>
+  </mat-form-field>
+  <div class="contenedor-botones">
+    <button [disabled]="form.invalid" mat-flat-button type="button" (click)="guardarCambios()">
+      Guardar Cambios
+    </button>
+    <a mat-stroked-button routerLink="/generos">Cancelar</a>
+  </div>
+</form>

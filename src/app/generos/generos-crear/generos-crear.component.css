@@ -1,0 +1,12 @@
+button {
+  margin-right: 1rem;
+}
+
+mat-form-field {
+  width: 100%;
+  max-width: 500px;
+}
+
+.contenedor-botones {
+  margin-top: 1rem;
+}
