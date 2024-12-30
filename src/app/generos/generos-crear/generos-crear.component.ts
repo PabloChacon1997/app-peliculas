@@ -5,38 +5,22 @@ import { MatFormField } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 import { primeraLetraMayuscula } from '../../compartidos/funciones/validaciones';
+import { FormularioGeneroComponent } from "../formulario-genero/formulario-genero.component";
+import { GeneroCreacionDTO } from '../generos';
 
 @Component({
   selector: 'app-generos-crear',
   standalone: true,
-  imports: [MatButtonModule, RouterLink, MatFormField, ReactiveFormsModule, MatInputModule],
+  imports: [FormularioGeneroComponent],
   templateUrl: './generos-crear.component.html',
   styleUrl: './generos-crear.component.css'
 })
 export class GenerosCrearComponent {
   router = inject(Router);
-  private formBuilder = inject(FormBuilder);
-
-  form = this.formBuilder.group({
-    nombre: ['', {validators: [Validators.required, primeraLetraMayuscula()]}]
-  })
-
-  obtenerErrorCampoNombre(): string {
-    let nombre = this.form.controls.nombre;
-
-    if (nombre.hasError('required')) {
-      return "El campo nombre es requrido";
-    }
-
-    if (nombre.hasError('primeraLetraMayuscula')) {
-      return nombre.getError('primeraLetraMayuscula').mensaje;
-    }
-
-    return "";
-  }
-  guardarCambios() {
+  
+  guardarCambios(genero: GeneroCreacionDTO) {
     // ---guardar cambios
     // this.router.navigate(['generos']);
-    console.log(this.form.value)
+    console.log('creando el género: ', genero)
   }
 }
