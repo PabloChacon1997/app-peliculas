@@ -2,6 +2,7 @@ import { Component, Input, numberAttribute } from '@angular/core';
 import { PeliculaCreacionDTO, PeliculaDTO } from '../peliculas';
 import { FormularioPeliculasComponent } from "../formulario-peliculas/formulario-peliculas.component";
 import { SelectorMultipleDTO } from '../../compartidos/componentes/selector-multiple/SelectroMultipleModelo';
+import { ActorAutocompleteDTO } from '../../actores/actores';
 
 @Component({
   selector: 'app-editar-pelicula',
@@ -36,6 +37,10 @@ export class EditarPeliculaComponent {
   cinesNoSeleccionados: SelectorMultipleDTO[] = [
     { llave: 2, valor: 'Acropolies' },
     { llave: 3, valor: 'Milenium Plaza' },
+  ];
+
+  actoresSeleccionados: ActorAutocompleteDTO[] = [
+    {id: 1, nombre: 'Tom Holland', personaje: 'Forrest Gump', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Tom_Holland_at_KCA_2022.jpg/220px-Tom_Holland_at_KCA_2022.jpg'},
   ];
 
   guardarCambios(pelicula: PeliculaCreacionDTO) {
