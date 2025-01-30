@@ -29,7 +29,7 @@ export class FormularioGeneroComponent implements OnInit{
   private formBuilder = inject(FormBuilder);
 
   form = this.formBuilder.group({
-    nombre: ['', {validators: [Validators.required, primeraLetraMayuscula()]}]
+    nombre: ['', {validators: [Validators.required, primeraLetraMayuscula(), Validators.maxLength(50)]}]
   })
 
   obtenerErrorCampoNombre(): string {
@@ -37,6 +37,10 @@ export class FormularioGeneroComponent implements OnInit{
 
     if (nombre.hasError('required')) {
       return "El campo nombre es requrido";
+    }
+
+    if (nombre.hasError('maxlength')) {
+      return `El campo nombre no puede tener mas de ${nombre.getError('maxlength').requiredLength} caracteres`;
     }
 
     if (nombre.hasError('primeraLetraMayuscula')) {
