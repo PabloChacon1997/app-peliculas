@@ -22,9 +22,11 @@
     "@angular/platform-browser-dynamic": "^18.0.0",
     "@angular/router": "^18.0.0",
     "@bluehalo/ngx-leaflet": "^18.0.2",
+    "@sweetalert2/ngx-sweetalert2": "^12.4.0",
     "leaflet": "^1.9.4",
     "moment": "^2.30.1",
     "rxjs": "~7.8.0",
+    "sweetalert2": "^11.12.4",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
   },

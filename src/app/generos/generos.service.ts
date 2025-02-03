@@ -5,15 +5,16 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { PaginacionDTO } from '../compartidos/modelos/PaginacionDTO';
 import { construirQueryParams } from '../compartidos/funciones/contruirQueryParams';
+import { ActorDTO } from '../actores/actores';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GenerosService {
 
+  constructor() { }
   private http = inject(HttpClient);
   private urlBase = environment.apiUrl+'/generos';
-  constructor() { }
 
   public obtenerPorPagina(paginacion: PaginacionDTO): Observable<HttpResponse<GeneroDTO[]>> {
     let queryParams = construirQueryParams(paginacion)
@@ -30,5 +31,8 @@ export class GenerosService {
 
   public crear(genero: GeneroCreacionDTO) {
     return this.http.post(this.urlBase, genero);
+  }
+  public eliminar(id: number) {
+    return this.http.delete(`${this.urlBase}/${id}`);
   }
 }
