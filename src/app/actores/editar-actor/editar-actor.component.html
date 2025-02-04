@@ -1,3 +1,8 @@
 <h2>Editar Actor</h2>
 
-<app-formulario-actores (posteoFormulario)="guardarCambios($event)" [modelo]="actor"></app-formulario-actores>
+@if (actor) {
+  <app-mostrar-errores [errores]="errores"></app-mostrar-errores>
+  <app-formulario-actores (posteoFormulario)="guardarCambios($event)" [modelo]="actor"></app-formulario-actores>
+} @else {
+  <app-cargando></app-cargando>
+}

@@ -1,3 +1,5 @@
-<h2>Crear Género</h2>
-<app-mostrar-errores [errores]="errores"></app-mostrar-errores>
-<app-formulario-genero (posteoFormulario)="guardarCambios($event)"></app-formulario-genero>
+<app-crear-entidad
+  rutaIndice="/genros"
+  titulo="Crear Género"
+  [formulario]="formularioGeneros"
+></app-crear-entidad>

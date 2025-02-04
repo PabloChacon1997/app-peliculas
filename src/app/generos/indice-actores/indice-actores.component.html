@@ -1,41 +1,5 @@
-<h2>Actores</h2>
-<button mat-flat-button routerLink="/actores/crear">Crear Nuevo</button>
-<app-listado-generico [listado]="actores">
-  <ng-container contenido>
-    <table mat-table [dataSource]="actores" class="mat-elevation-z8 indice-elementos">
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef>Id</th>
-        <td mat-cell *matCellDef="let elemento">{{ elemento.id }}</td>
-      </ng-container>
-      <ng-container matColumnDef="nombre">
-        <th mat-header-cell *matHeaderCellDef>nombre</th>
-        <td mat-cell *matCellDef="let elemento">{{ elemento.nombre }}</td>
-      </ng-container>
-      <ng-container matColumnDef="acciones">
-        <th mat-header-cell *matHeaderCellDef>Acciones</th>
-        <td mat-cell *matCellDef="let elemento">
-          <a routerLink="/actores/editar/{{elemento.id}}" mat-flat-button>Editar</a>
-          <button 
-            mat-flat-button color="warn"
-            [swal]="{title: 'Confirmación', text: '¿Deseas eliminar este registro?', showCancelButton: true}"
-            (confirm)="eliminar(elemento.id)"
-          >Eliminar</button>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="columnasAmostrar"></tr>
-      <tr mat-row *matRowDef="let row; columns: columnasAmostrar"></tr>
-      
-    </table>
-    <mat-paginator 
-      showFirstLastButtons
-      [length]="cantidadTotalRegistros"
-      [pageIndex]="paginacion.pagina-1"
-      [pageSize]="paginacion.recordPorPagina"
-      [pageSizeOptions]="[5,10,50]"
-      class="mat-elevation-z8"
-      (page)="actualizarPaginacion($event)"
-    ></mat-paginator>
-  </ng-container>
-  
-</app-listado-generico>
+<app-indice-entidad
+  titulo="Actores"
+  rutaCrear="/actores/crear"
+  rutaEditar="/actores/editar"
+></app-indice-entidad>
