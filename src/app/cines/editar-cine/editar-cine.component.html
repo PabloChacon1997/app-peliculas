@@ -1,2 +1,6 @@
-<h2>Editar Cine</h2>
-<app-formulario-cines (posteoFormularios)="guardarCambios($event)" [modelo]="cine"></app-formulario-cines>
+<app-editar-entidad
+  [formulario]="formularioCines"
+  titulo="Editar Cine"
+  rutaIndice="/cines"
+  [id]="id"
+></app-editar-entidad>

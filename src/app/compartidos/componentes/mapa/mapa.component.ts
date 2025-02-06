@@ -13,7 +13,9 @@ import { Coordenada } from './Coordenada';
 export class MapaComponent implements OnInit{
   ngOnInit(): void {
     this.capas = this.coordenadasIniciales.map(valor => {
+      console.log(valor)
       const marcador = marker([valor.latitud, valor.longitud], this.markerOptions);
+      console.log(marcador)
       return marcador;
     })
   }
@@ -51,6 +53,7 @@ export class MapaComponent implements OnInit{
     const longitud = event.latlng.lng;
     this.capas = [];
     this.capas.push(marker([latitud, longitud], this.markerOptions));
+    console.log({latitud, longitud})
     this.coordenadaSeleccionada.emit({latitud, longitud});
   }
 

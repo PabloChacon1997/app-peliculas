@@ -27,7 +27,7 @@ export class FormularioCinesComponent implements OnInit{
   modelo?: CineCreacionDTO;
 
   @Output()
-  posteoFormularios = new EventEmitter<CineCreacionDTO>();
+  posteoFormulario = new EventEmitter<CineCreacionDTO>();
 
   coordenadasIniciales: Coordenada[] = [];
 
@@ -58,6 +58,6 @@ export class FormularioCinesComponent implements OnInit{
     }
 
     const cine = this.form.value as CineCreacionDTO;
-    this.posteoFormularios.emit(cine);
+    this.posteoFormulario.emit(cine);
   }
 }
