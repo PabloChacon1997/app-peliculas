@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,6 +7,7 @@ import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ActorAutocompleteDTO } from '../actores';
+import { ActoresService } from '../actores.service';
 
 @Component({
   selector: 'app-autocomplete-actores',
@@ -15,16 +16,23 @@ import { ActorAutocompleteDTO } from '../actores';
   templateUrl: './autocomplete-actores.component.html',
   styleUrl: './autocomplete-actores.component.css'
 })
-export class AutocompleteActoresComponent {
+export class AutocompleteActoresComponent implements OnInit {
+  ngOnInit(): void {
+    this.control.valueChanges.subscribe(valor => {
+      if (typeof valor === 'string' && valor) {
+        this.actoresService.obtenerPorNombre(valor).subscribe(actores => {
+          this.actores = actores;
+        });
+      }
+    })
+  }
   control = new FormControl();
-  actores: ActorAutocompleteDTO[] = [
-    {id: 1, nombre: 'Tom Holland', personaje: '', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Tom_Holland_at_KCA_2022.jpg/220px-Tom_Holland_at_KCA_2022.jpg'},
-    {id: 2, nombre: 'Tom Hanks', personaje: '', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Tom_Hanks_at_the_Elvis_Premiere_2022.jpg/220px-Tom_Hanks_at_the_Elvis_Premiere_2022.jpg'},
-    {id: 3, nombre: 'Samuel L Jackson', personaje: '', foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/SamuelLJackson.jpg/250px-SamuelLJackson.jpg'},
-  ];
+  actores: ActorAutocompleteDTO[] = [];
 
   @Input({required: true})
   actoresSeleccionados: ActorAutocompleteDTO[] = [];
+
+  actoresService = inject(ActoresService);
 
   columnosAMostrar = ['imagen', 'nombre', 'personaje', 'acciones'];
 
