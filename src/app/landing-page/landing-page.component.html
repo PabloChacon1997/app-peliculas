@@ -1,4 +1,4 @@
 <h2>En Cines</h2>
-<app-listado [peliculas]="peliculasEnCine"></app-listado>
+<app-listado [peliculas]="peliculasEnCine" (eliminar)="peliculaEliminada()"></app-listado>
 <h2>En Proximos Estrenos</h2>
-<app-listado [peliculas]="peliculasProximosEsternos"></app-listado>
+<app-listado [peliculas]="peliculasProximosEsternos" (eliminar)="peliculaEliminada()"></app-listado>

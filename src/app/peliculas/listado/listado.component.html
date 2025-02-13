@@ -14,8 +14,14 @@
             <a href="">{{ pelicula.titulo }}</a>
           </p>
           <div>
-            <a mat-flat-button>Editar</a>
-            <a mat-flat-button type="button" color="warn">Borrar</a>
+            <a mat-flat-button [routerLink]="['/peliculas/editar', pelicula.id]">Editar</a>
+            <a 
+              mat-flat-button 
+              type="button" 
+              color="warn"
+              [swal]="{title: 'Confirmación', text: '¿Deseas borrar el registro?', showCancelButton: true}"
+              (confirm)="eliminarId(pelicula.id)"
+            >Borrar</a>
           </div>
         </div>
       }
