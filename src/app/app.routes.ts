@@ -12,6 +12,7 @@ import { EditarActorComponent } from './actores/editar-actor/editar-actor.compon
 import { EditarCineComponent } from './cines/editar-cine/editar-cine.component';
 import { EditarPeliculaComponent } from './peliculas/editar-pelicula/editar-pelicula.component';
 import { FiltroPeliculasComponent } from './peliculas/filtro-peliculas/filtro-peliculas.component';
+import { DetallePeliculaComponent } from './peliculas/detalle-pelicula/detalle-pelicula.component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -31,6 +32,7 @@ export const routes: Routes = [
   { path: 'peliculas/crear', component: CrearPeliculaComponent },
   { path: 'peliculas/editar/:id', component: EditarPeliculaComponent },
   { path: 'peliculas/filtrar', component: FiltroPeliculasComponent },
+  { path: 'peliculas/:id', component: DetallePeliculaComponent },
   // No encontrado
   { path: '**', redirectTo: '' }
 ];

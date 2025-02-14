@@ -13,15 +13,19 @@ import { Coordenada } from './Coordenada';
 export class MapaComponent implements OnInit{
   ngOnInit(): void {
     this.capas = this.coordenadasIniciales.map(valor => {
-      console.log(valor)
       const marcador = marker([valor.latitud, valor.longitud], this.markerOptions);
-      console.log(marcador)
+      if (valor.texto) {
+        marcador.bindPopup(valor.texto, { autoClose: false, autoPan: false });
+      }
       return marcador;
     })
   }
 
   @Input()
   coordenadasIniciales: Coordenada[] = [];
+
+  @Input()
+  soloLectura = false;
 
   @Output()
   coordenadaSeleccionada= new EventEmitter<Coordenada>();
@@ -49,6 +53,9 @@ export class MapaComponent implements OnInit{
   capas: Marker<any>[] = []
 
   manejarClick(event: LeafletMouseEvent) {
+    if (this.soloLectura) {
+      return;
+    }
     const latitud =event.latlng.lat;
     const longitud = event.latlng.lng;
     this.capas = [];

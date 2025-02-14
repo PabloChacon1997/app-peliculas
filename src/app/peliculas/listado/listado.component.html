@@ -3,7 +3,7 @@
     <div class="peliculas-contenedor">
       @for (pelicula of peliculas; track $index) {
         <div class="pelicula-contenedor">
-          <a>
+          <a [routerLink]="['/peliculas', pelicula.id]">
             @if (pelicula.poster) {
               <img [src]="pelicula.poster" width="169" height="250"/>
             } @else {
@@ -11,7 +11,7 @@
             }
           </a>
           <p>
-            <a href="">{{ pelicula.titulo }}</a>
+            <a [routerLink]="['/peliculas', pelicula.id]">{{ pelicula.titulo }}</a>
           </p>
           <div>
             <a mat-flat-button [routerLink]="['/peliculas/editar', pelicula.id]">Editar</a>

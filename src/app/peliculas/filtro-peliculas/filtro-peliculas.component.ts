@@ -9,38 +9,53 @@ import { ListadoComponent } from "../listado/listado.component";
 import { FiltroPeliculas } from './filtroPelicula';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { GeneroDTO } from '../../generos/generos';
+import { PeliculaDTO } from '../peliculas';
+import { PeliculasService } from '../peliculas.service';
+import { GenerosService } from '../../generos/generos.service';
+import { PaginacionDTO } from '../../compartidos/modelos/PaginacionDTO';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-filtro-peliculas',
   standalone: true,
-  imports: [MatButtonModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatSelectModule, MatCheckboxModule, ListadoComponent],
+  imports: [MatButtonModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatSelectModule, MatCheckboxModule, ListadoComponent, MatPaginatorModule],
   templateUrl: './filtro-peliculas.component.html',
   styleUrl: './filtro-peliculas.component.css'
 })
 export class FiltroPeliculasComponent implements OnInit{
+  generosService = inject(GenerosService);
+  peliculasService = inject(PeliculasService);
+
+  paginacion: PaginacionDTO = { pagina: 1, recordPorPagina: 10 }
+  cantidadTotalRegistros!:number;
+
   ngOnInit(): void {
-    this.leerValoresURL();
-    this.buscarPeliculas(this.form.value as FiltroPeliculas)
-    this.form.valueChanges.subscribe(valores => {
-      this.peliculas = this.peliculasOriginal
-      this.buscarPeliculas(valores as FiltroPeliculas)
-      this.escribirParametrosBusquedaEnUrl(valores as FiltroPeliculas)
+    this.generosService.obtenerTodos()
+    .pipe(
+      debounceTime(300)
+    )
+    .subscribe(generos => {
+      this.generos = generos;
+      this.leerValoresURL();
+      this.buscarPeliculas(this.form.value as FiltroPeliculas)
+      this.form.valueChanges.subscribe(valores => {
+        this.buscarPeliculas(valores as FiltroPeliculas)
+        this.escribirParametrosBusquedaEnUrl(valores as FiltroPeliculas)
+      })
     })
   }
 
   buscarPeliculas(valores: FiltroPeliculas) {
-    if (valores.titulo) {
-      this.peliculas = this.peliculas.filter(pelicula => pelicula.titulo.indexOf(valores.titulo) !== -1);
-    }
-    if (valores.generoId !== 0) {
-      this.peliculas = this.peliculas.filter(pelicula => pelicula.generos.indexOf(valores.generoId) !== -1);
-    }
-    if (valores.proximosEstrenos) {
-      this.peliculas = this.peliculas.filter(pelicula => pelicula.proximosEstrenos);
-    }
-    if (valores.enCines) {
-      this.peliculas = this.peliculas.filter(pelicula => pelicula.enCines);
-    }
+    valores.pagina = this.paginacion.pagina;
+    valores.recordsPorPagina = this.paginacion.recordPorPagina;
+
+    this.peliculasService.filtrar(valores).subscribe(respuesta => {
+      this.peliculas = respuesta.body as PeliculaDTO[];
+      const cabecera = respuesta.headers.get('cantidad-total-registros') as string;
+      this.cantidadTotalRegistros = parseInt(cabecera, 10);
+    })
   }
 
   private formBuilder = inject(FormBuilder);
@@ -100,76 +115,11 @@ export class FiltroPeliculasComponent implements OnInit{
     this.location.replaceState('peliculas/filtrar', queryStrings.join('&'));
   }
 
-  generos = [
-    {
-      id: 1,
-      nombre: 'Drama'
-    },
-    {
-      id: 2,
-      nombre: 'Acción'
-    },
-    {
-      id: 3,
-      nombre: 'Comedia'
-    },
-  ]
+  generos!: GeneroDTO[];
+  peliculas!: PeliculaDTO[];
 
-  peliculasOriginal = [{
-    titulo: 'Inside Out 2',
-    fechaLanzamiento: new Date(),
-    precio: 1400.99,
-    poster: 'https://upload.wikimedia.org/wikipedia/en/f/f7/Inside_Out_2_poster.jpg?20240514232832',
-    generos: [1,2,3],
-    enCines: true,
-    proximosEstrenos: false
-  },
-  {
-    titulo: 'Moana 2',
-    fechaLanzamiento: new Date('2016-05-03'),
-    precio: 300.99,
-    poster: 'https://upload.wikimedia.org/wikipedia/en/7/73/Moana_2_poster.jpg',
-    generos: [2,3],
-    enCines: false,
-    proximosEstrenos: true
-  },
-  {
-    titulo: 'Bad Boys: Ride or Die',
-    fechaLanzamiento: new Date('2016-05-03'),
-    precio: 300.99,
-    poster: 'https://upload.wikimedia.org/wikipedia/en/8/8b/Bad_Boys_Ride_or_Die_%282024%29_poster.jpg',
-    generos: [1,2],
-    enCines: true,
-    proximosEstrenos: false
-  },
-  {
-    titulo: 'Deadpool & Wolverine',
-    fechaLanzamiento: new Date('2016-05-03'),
-    precio: 300.99,
-    poster: 'https://upload.wikimedia.org/wikipedia/en/thumb/4/4c/Deadpool_%26_Wolverine_poster.jpg/220px-Deadpool_%26_Wolverine_poster.jpg',
-    generos: [],
-    enCines: false,
-    proximosEstrenos: true
-  },
-  {
-    titulo: 'Oppenheimer',
-    fechaLanzamiento: new Date('2016-05-03'),
-    precio: 300.99,
-    poster: 'https://upload.wikimedia.org/wikipedia/en/thumb/4/4a/Oppenheimer_%28film%29.jpg/220px-Oppenheimer_%28film%29.jpg',
-    generos: [3],
-    enCines: true,
-    proximosEstrenos: false
-  },
-  {
-    titulo: 'The Flash',
-    fechaLanzamiento: new Date('2016-05-03'),
-    precio: 300.99,
-    poster: 'https://upload.wikimedia.org/wikipedia/en/thumb/e/ed/The_Flash_%28film%29_poster.jpg/220px-The_Flash_%28film%29_poster.jpg',
-    generos: [2],
-    enCines: false,
-    proximosEstrenos: true
-  }  
-];
-
-peliculas = this.peliculasOriginal;
+  actualizarPaginacion(datos: PageEvent) {
+    this.paginacion = { pagina: datos.pageIndex +1, recordPorPagina: datos.pageSize }
+    this.buscarPeliculas(this.form.value as FiltroPeliculas);
+  }
 }
