@@ -8,16 +8,22 @@
     <a mat-button routerLink="peliculas/filtrar">
       <mat-icon>search</mat-icon> Peliculas</a>
   </div>
-  <div>
-    <a mat-button routerLink="generos">Géneros</a>
-  </div>
-  <div>
-    <a mat-button routerLink="actores">Actores</a>
-  </div>
-  <div>
-    <a mat-button routerLink="cines">Cines</a>
-  </div>
-  <div>
-    <a mat-button routerLink="peliculas/crear">Crear Pelicula</a>
-  </div>
+
+  <app-autorizado rol="admin">
+    <ng-container autorizado>
+      <div>
+        <a mat-button routerLink="generos">Géneros</a>
+      </div>
+      <div>
+        <a mat-button routerLink="actores">Actores</a>
+      </div>
+      <div>
+        <a mat-button routerLink="cines">Cines</a>
+      </div>
+      <div>
+        <a mat-button routerLink="peliculas/crear">Crear Pelicula</a>
+      </div>
+    </ng-container>
+    
+  </app-autorizado>
 </mat-toolbar>
