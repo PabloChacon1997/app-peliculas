@@ -35,6 +35,17 @@ export class SeguridadService {
     localStorage.setItem(this.llaveTokenExpiracion, respuestaAutenticacion.expiracion.toString());
   }
 
+  obtenerToken(): string | null {
+    return localStorage.getItem(this.llaveToken);
+  }
+
+  obtenerCampoToken(campo: string): string {
+    const token = localStorage.getItem(this.llaveToken);
+    if (!token) return '';
+    var dataToken = JSON.parse(atob(token.split('.')[1]));
+    return dataToken[campo];
+  }
+
   estaLogueado(): boolean {
     const token = localStorage.getItem(this.llaveToken);
     if (!token) {
@@ -43,7 +54,6 @@ export class SeguridadService {
 
     const expiracion = localStorage.getItem(this.llaveTokenExpiracion)!;
     const expiracionFecha = new Date(expiracion);
-
     if (expiracionFecha <= new Date()) {
       this.logout();
       return false;

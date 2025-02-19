@@ -26,4 +26,17 @@
     </ng-container>
     
   </app-autorizado>
+  <div class="espacio"></div>
+
+  <app-autorizado style="display: inline;">
+    <ng-container autorizado>
+      <span class="saludo">Hola, {{ seguridadService.obtenerCampoToken('email') }}</span>
+      <a mat-button (click)="seguridadService.logout()">Logout</a>
+    </ng-container>
+    <ng-container noAutorizado>
+      <a mat-button routerLink="login">Login</a>
+      <a mat-button routerLink="registrar">Resgistro</a>
+    </ng-container>
+    
+  </app-autorizado>
 </mat-toolbar>

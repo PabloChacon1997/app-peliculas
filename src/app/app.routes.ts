@@ -15,6 +15,7 @@ import { FiltroPeliculasComponent } from './peliculas/filtro-peliculas/filtro-pe
 import { DetallePeliculaComponent } from './peliculas/detalle-pelicula/detalle-pelicula.component';
 import { asAdminGuard } from './compartidos/guards/as-admin.guard';
 import { LoginComponent } from './seguridad/login/login.component';
+import { RegistroComponent } from './seguridad/registro/registro.component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -37,6 +38,7 @@ export const routes: Routes = [
   { path: 'peliculas/:id', component: DetallePeliculaComponent },
   // Login
   { path: 'login', component: LoginComponent },
+  { path: 'registrar', component: RegistroComponent },
   // No encontrado
   { path: '**', redirectTo: '' }
 ];

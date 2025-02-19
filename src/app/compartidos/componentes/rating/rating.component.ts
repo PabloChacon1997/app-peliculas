@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
@@ -9,7 +9,10 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './rating.component.html',
   styleUrl: './rating.component.css'
 })
-export class RatingComponent {
+export class RatingComponent implements OnInit{
+  ngOnInit(): void {
+    this.ratingAnterior = this.ratingSeleccionado;
+  }
 
   @Input({required: true, transform: (valor: number) => Array(valor).fill(0)})
   maximoRating!: number[];
