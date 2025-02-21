@@ -7,3 +7,7 @@ export interface RespuestaAutenticacionDTO {
   token: string;
   expiracion: string;
 }
+
+export interface UsuarioDTO {
+  email: string;
+}

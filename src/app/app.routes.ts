@@ -16,6 +16,7 @@ import { DetallePeliculaComponent } from './peliculas/detalle-pelicula/detalle-p
 import { asAdminGuard } from './compartidos/guards/as-admin.guard';
 import { LoginComponent } from './seguridad/login/login.component';
 import { RegistroComponent } from './seguridad/registro/registro.component';
+import { IndiceUsuariosComponent } from './seguridad/indice-usuarios/indice-usuarios.component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -39,6 +40,8 @@ export const routes: Routes = [
   // Login
   { path: 'login', component: LoginComponent },
   { path: 'registrar', component: RegistroComponent },
+  // Usuarios
+  { path: 'usuarios', component: IndiceUsuariosComponent , canActivate: [asAdminGuard]},
   // No encontrado
   { path: '**', redirectTo: '' }
 ];
